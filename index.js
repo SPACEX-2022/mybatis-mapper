@@ -31,6 +31,27 @@ MybatisMapper.prototype.createMapper = function(xmls) {
   }
 };
 
+MybatisMapper.prototype.createOneMapper = function(xmlStr) {
+  const queryTypes = [ 'sql', 'select', 'insert', 'update', 'delete' ];
+
+  // Parse each XML files
+  try{
+    var rawText = replaceCdata(xmlStr);
+    var mappers = HTML.parse(rawText);
+  } catch (err){
+          throw new Error("Error occured during open XML file [" + xml + "]");
+  }
+
+  try{
+    for (var j = 0, mapper; mapper = mappers[j]; j++) {
+      // Mapping <mapper> tag recursively
+      findMapper(mapper);
+    }
+  } catch (err) {
+    throw new Error("Error occured during parse XML file [" + xml + "]");
+  }
+};
+
 findMapper = function(children) {
   var queryTypes = [ 'sql', 'select', 'insert', 'update', 'delete' ];
 
