@@ -22,6 +22,8 @@ declare namespace MybatisMapper {
 
   export function createMapper(xmls: string[]): void;
 
+  export function createOneMapper(xmlStr: string): void;
+
   export function getStatement(
     namespace: string,
     sql: string,
